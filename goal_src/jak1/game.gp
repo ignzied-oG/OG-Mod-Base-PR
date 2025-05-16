@@ -1659,6 +1659,11 @@
 ;; the DGO file
 (custom-level-cgo "TSZ.DGO" "test-zone/testzone.gd")
 
+
+(build-custom-level "test-level")
+;; the DGO file
+(custom-level-cgo "TLL.DGO" "test-level/testlevel.gd")
+
 ;; generate the art group for a custom actor.
 ;; requires a .glb model file in custom_assets/jak1/models/custom_levels
 ;; to also generate a collide-mesh, add :gen-mesh #t
@@ -2117,6 +2122,15 @@
  "mods/mod-custom-code.gc"
  "mods/mod-debug.gc"
 )
+
+
+(goal-src-sequence
+ "levels/test-level/"
+ :deps ("$OUT/obj/ticky.o")
+ "test-level-obs.gc"
+ "test-level-part.gc"
+ )
+
 
 (goal-src "levels/test-zone/test-zone-obs.gc" "process-drawable")
 
