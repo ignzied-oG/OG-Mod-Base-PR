@@ -288,7 +288,10 @@
   (cave 13)
   (lavatube 14)
   (citadel 15)
-  (max 16))
+
+  ;;custom levels
+  (clifful 16)
+  (max 17))
 
 ;; maps level-info indices to the appropriate offset in *level-task-data*
 (define *level-task-data-remap*
@@ -319,6 +322,14 @@
        (level-task-data-index citadel) ;; finalboss?
        (level-task-data-index misty) ;; demo?
        (level-task-data-index misty) ;; intro?
+
+       
+     ;;----------------------------
+     ;;custom level
+     ;;----------------------------
+
+       (level-task-data-index clifful)
+
        ))
 
 ;; maps goal language ID to its name string ID
@@ -1407,7 +1418,137 @@
                       'task-info-data
                       :task-id (game-task citadel-buzzer)
                       :task-name
-                      (new 'static 'array text-id 4 (text-id citadel-buzzer) (text-id citadel-buzzer) (text-id citadel-buzzer) (text-id zero)))))))
+                      (new 'static 'array text-id 4 (text-id citadel-buzzer) (text-id citadel-buzzer) (text-id citadel-buzzer) (text-id zero)))))
+
+
+
+
+          ;;----------------------------
+          ;;custom
+          ;;----------------------------
+     (new 'static
+            'level-tasks-info
+            :level-name-id (text-id clifful-v)
+            :text-group-index 1
+            :nb-of-tasks 8
+            :buzzer-task-index 0
+            :task-info
+            (new 'static
+                 'array
+                 task-info-data
+                 8
+                 (new 'static
+                      'task-info-data
+                      :task-id (game-task clifful-jak-cell)
+                      :task-name
+                      (new 'static 
+                         'array 
+                         text-id 
+                         4 
+                         (text-id clifful-jak-cell) 
+                         (text-id clifful-jak-cell) 
+                         (text-id clifful-jak-cell) 
+                         (text-id zero)))
+                 (new 'static
+                      'task-info-data
+                      :task-id (game-task clifful-daxter-dummy)
+                      :task-name
+                      (new 'static
+                           'array
+                           text-id
+                           4
+                           (text-id clifful-daxter-dummy)
+                           (text-id clifful-daxter-dummy)
+                           (text-id clifful-daxter-dummy)
+                           (text-id zero)))
+                 (new 'static
+                      'task-info-data
+                      :task-id (game-task clifful-pelican )
+                      :task-name
+                      (new 'static
+                           'array
+                           text-id
+                           4
+                           (text-id clifful-pelican )
+                           (text-id clifful-pelican )
+                           (text-id clifful-pelican )
+                           (text-id zero)))
+                 (new 'static
+                      'task-info-data
+                      :task-id (game-task clifful-hidden)
+                      :task-name
+                      (new 'static
+                           'array
+                           text-id
+                           4
+                           (text-id clifful-hidden)
+                           (text-id clifful-hidden)
+                           (text-id clifful-hidden)
+                           (text-id zero)))
+                 (new 'static
+                      'task-info-data
+                      :task-id (game-task clifful-otherside )
+                      :task-name
+                      (new 'static
+                           'array
+                           text-id
+                           4
+                           (text-id clifful-otherside )
+                           (text-id clifful-otherside )
+                           (text-id clifful-otherside )
+                           (text-id zero)))
+                 (new 'static
+                      'task-info-data
+                      :task-id (game-task clifful-yakcows)
+                      :task-name
+                      (new 'static
+                           'array
+                           text-id
+                           4
+                           (text-id clifful-yakcows)
+                           (text-id clifful-yakcows)
+                           (text-id clifful-yakcows)
+                           (text-id zero)))
+                 (new 'static
+                      'task-info-data
+                      :task-id (game-task clifful-tea)
+                      :task-name
+                      (new 'static 
+                      'array 
+                      text-id 
+                      4 
+                      (text-id clifful-tea) 
+                      (text-id clifful-tea) 
+                      (text-id clifful-tea) 
+                      (text-id zero)))
+                 (new 'static
+                      'task-info-data
+                      :task-id (game-task clifful-buzzer)
+                      :task-name
+                      (new 'static
+                           'array
+                           text-id
+                           4
+                           (text-id clifful-buzzer)
+                           (text-id clifful-buzzer)
+                           (text-id clifful-buzzer)
+                           (text-id zero)))))
+
+
+;;----------------------------
+;;end
+;;----------------------------
+
+
+
+                     
+                      
+                      
+                      
+                      
+                      
+))
+
 
 ;; goes down by 24 or 23 every time
 (define *task-egg-starting-x* (new 'static 'boxed-array :type int32 218 194 171 147 124 100 77 53 30))

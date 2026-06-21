@@ -1654,9 +1654,13 @@
 ;; Set up the build system to build the level geometry
 ;; this path is relative to the custom_assets/jak1/levels/ folder
 ;; it should point to the .jsonc file that specifies the level.
-(build-custom-level "test-zone")
+(build-custom-level "test-level")
 ;; the DGO file
-(custom-level-cgo "TSZ.DGO" "test-zone/testzone.gd")
+(custom-level-cgo "TLL.DGO" "test-level/testlevel.gd")
+
+(build-custom-level "clifful-v")
+;; the DGO file
+(custom-level-cgo "CFV.DGO" "clifful-v/cliffulv.gd")
 
 ;; generate the art group for a custom actor.
 ;; requires a .glb model file in custom_assets/jak1/models/custom_levels
@@ -2120,7 +2124,21 @@
  "mods/mod-debug.gc"
 )
 
+;;-----------------------------------
+;; custom level
+;;-----------------------------------
+
+(goal-src-sequence
+ "levels/clifful-v/"
+ :deps ("$OUT/obj/ticky.o")
+ "clifful-v-obs.gc"
+ "clifful-v-part.gc"
+ )
+
 (goal-src "levels/test-zone/test-zone-obs.gc" "process-drawable")
+
+
+
 
 
 (group-list "all-code"

@@ -124,4 +124,17 @@
   (plunger-lurker-hit 113)
   (leaving-misty 114)
   (assistant-village3 115)
-  (max 116))
+
+  (dummy 116)
+
+  ;;CUSTOM TASKS (Also changed the max at the end)
+  (clifful-jak-cell 117)
+  (clifful-daxter-dummy 118)
+  (clifful-pelican 119)
+  (clifful-hidden 120)
+  (clifful-otherside 121)
+  (clifful-yakcows 122)
+  (clifful-tea 123)
+  (clifful-buzzer 124)
+  
+  (max))

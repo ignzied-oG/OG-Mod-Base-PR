@@ -804,6 +804,21 @@
 
   (save-and-load-game #x3000)
   ;; GAME-TEXT-ID ENUM ENDS
+  
+  ;;----------------------------
+  ;; custom level
+  ;;----------------------------
+  
+  (clifful-v #x4000)
+  (clifful-jak-cell #x4001)
+  (clifful-daxter-dummy #x4002)
+  (clifful-pelican #x4003)
+  (clifful-hidden #x4004)
+  (clifful-otherside #x4005)
+  (clifful-yakcows #x4006)
+  (clifful-tea #x4007)
+  (clifful-buzzer #x4008)
+
   )
 
 ;; DECOMP BEGINS

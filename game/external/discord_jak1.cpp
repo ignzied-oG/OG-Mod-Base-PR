@@ -19,7 +19,8 @@ const std::map<std::string, std::string> level_names = {{"intro", "Intro"},
                                                         {"maincave", "Spider Cave"},
                                                         {"lavatube", "Lava Tube"},
                                                         {"citadel", "Gol and Maia's Citadel"},
-                                                        {"finalboss", "Final Boss"}};
+                                                        {"finalboss", "Final Boss"},
+                                                      {"clifful-v", "clifful"}};
 
 // for remapping sub-level names to the matching one in level_names
 const std::map<std::string, std::string> level_name_remap = {{"jungleb", "jungle"},

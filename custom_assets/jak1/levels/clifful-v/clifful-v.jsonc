@@ -1,0 +1,568 @@
+{
+  // The "in-game" name of the level. Should be lower case, with dashes (GOAL symbol name)
+  // the name of this file, and the folder this file is in must have the same name.
+  "long_name": "clifful-V",
+  // The file name, should be upper case and 8 characters or less.
+  "iso_name": "CLIFFULV",
+  // The nickname, should be exactly 3 characters
+  "nickname": "cfv", // 3 char name, all lowercase
+  // Background mesh file.
+  // Must have vertex colors. Use the blender cycles renderer, bake, diffuse, uncheck color,
+  // and bake to vertex colors. For now, only the first vertex color group is used, so make sure you
+  // only have 1.
+  "gltf_file": "custom_assets/jak1/levels/clifful-v/clifful-v2.glb",
+
+  // automatically set wall vs. ground based on angle. Useful if you don't want to assign this yourself
+  "automatic_wall_detection": true,
+  "automatic_wall_angle": 45.0,
+
+  // if your mesh has triangles with incorrect orientation, set this to make all collision mesh triangles double sided
+  // this makes collision 2x slower and bigger, so only use if really needed
+  "double_sided_collide": false,
+
+  // available res-lump tag types:
+  // integer types: int32, uint32, enum-int32, enum-uint32
+  // float types: float, meters (1 meter = 4096.0 units), degrees (65536.0 = 360°)
+  // vector types: vector (normal floats), vector4m (meters), vector3m (meters with w set to 1.0), vector-vol (normal floats with w in meters), movie-pos (meters with w in degrees)
+  // special types: symbol, type, string, eco-info, cell-info, buzzer-info, water-height
+  //
+  // examples:
+  //
+  // adds a float tag 'spring-height' with value of 200 meters (1 meter = 4096.0 units):
+  // "spring-height": ["meters", 200.0]
+  //
+  // adds a degrees tag 'rotoffset':
+  // "rotoffset": ["degrees", -45.0]
+  //
+  // adds a movie-pos tag:
+  // "movie-pos": ["movie-pos", [100.22, -25.3, 99.5, 180.0]]
+  //
+  // adds an enum tag 'options':
+  // "options": ["enum-int32", "(fact-options large)"]
+  //
+  // adds a water-height tag:
+  // "water-height": ["water-height", 25.0, 0.5, 2.0, "(water-flags wt08 wt03 wt01)"]
+  //
+  // adds an eco-info tag:
+  // "eco-info": ["eco-info", "(pickup-type health)", 2]
+  //
+  // adds a cell-info tag:
+  // "eco-info": ["cell-info", "(game-task training-gimmie)"]
+  //
+  // adds a buzzer-info tag:
+  // "eco-info": ["buzzer-info", "(game-task training-buzzer)", 5]
+  //
+  // adds a 'symbol' tag (using the 'type' and 'string' lump types works the same way):
+  // "symbol-list": ["symbol", "sym-1", "sym-2"]
+
+  // The base actor id for your custom level. If you have multiple levels, this should be unique!
+  "base_id": 20000,
+
+  // All art groups you want to use in your custom level. Will add their models and corresponding textures to the FR3 file.
+  // Note: You will still have to add them to your level's .gd file.
+  // "art_groups": ["plat-ag"],
+  "art_groups": ["babak-ag", "plat-ag", "plat-eco-ag","yakow-ag","pelican-ag","racer-ag", "ef-plane-ag","water-anim-sunken-ag", "water-anim-sunken-dark-eco-ag","pontoonten-ag","race-ring-ag"],
+
+  // If you have any custom models in the "custom_assets/jak1/models/custom_levels" folder that you want to use in your level, add them to this list.
+  // Note: Like with art groups, these should also be added to your level's .gd file.
+  "custom_models": [],
+
+  // Any textures you want to include in your custom level. This is mainly useful for things such as the zoomer HUD,
+  // sky textures and cases where you want to use objects drawn with the generic renderer,
+  // which also requires you to set a texture remap table and a list of tpages.
+  // To get a list of all the textures, you can extract all of the game's textures
+  // by setting "save_texture_pngs" to true in the decompiler config.
+  // The format is ["tpage-name", "texture-name1", "texture-name2", ...].
+  // If you want all textures from a tpage, you can just do ["tpage-name"].
+  "textures": [
+    // Zoomer HUD textures
+    ["zoomerhud"],
+    // Sandover sky textures
+    ["village1-vis-alpha"]
+    
+  ],
+
+  // Which vanilla level's texture remap table to use.
+  // This is needed if you want to have proper textures for objects that are drawn using generic, such as
+  // dark eco pools or dying enemies. If you choose to use this,
+  // the order of art groups and tpages in your level's .gd MUST match the vanilla level's for the textures to work.
+  "tex_remap": "village1",
+
+  // Which sky to use for your custom level. This needs to be the name of a vanilla level with sky textures.
+  // Your level's mood update needs to be set up to copy the sky texture (update-mood-default already handles this as an example).
+  // You also need to add a specific tpage to your level .gd depending on the level you chose:
+  // training:   tpage-1308.go
+  // village1:   tpage-401.go
+  // beach:      tpage-215.go
+  // jungle:     tpage-388.go
+  // misty:      tpage-520.go
+  // firecanyon: tpage-1123.go
+  // village2:   tpage-921.go
+  // rolling:    tpage-925.go
+  // sunkenb:    tpage-162.go
+  // swamp:      tpage-630.go
+  // ogre:       tpage-1117.go
+  // village3:   tpage-1194.go
+  // snow:       tpage-712.go
+  // finalboss:  tpage-1418.go
+  // The tpage you choose also has to be in the alpha (4th) slot in the "tpages" list below.
+  "sky": "none",
+
+  // Any texture pages that are added to the level's "texture-ids" array.
+  // These will be logged in and linked as part of level loading.
+  // There are five tpage categories, in this order:
+  // - tfrag
+  // - pris
+  // - shrub
+  // - alpha
+  // - water
+  // This is also (with the exception of levels that use the zoomer) the order that the tpages are listed in in the vanilla .gd files.
+  // You need to also add these to your level .gd as well.
+  // Sky textures use the alpha slot.
+  // If this is empty and "tex_remap" and "sky" are the same level, this will be auto-filled with the tpages from the
+  // corresponding level (check its .gd file for the art group/tpage order to copy over).
+  "tpages": [],
+
+  // Ambients you want to use in your custom level. Ambients can be used for various things like changing the music variation (flava),
+  // adding ambient sounds, level name hints, etc.
+  "ambients": [  ],
+
+  "actors": [ 
+    // {
+    //   "trans": [1586.85, 202.347, 1316.44],
+    //   "etype": "yakow",
+    //   "game_task": 0,
+    //   "quat" : [0, 0, 0, 1],
+    //   "bsphere": [1586.85, 202.347, 1316.44, 10],
+    //   "lump": {
+    //     "name": "test-yakow",
+    //     "vis-dist": ["meters", 200.0],
+    //     "cam-notice-dist": ["meters", 30.0],
+    //     "idle-distance": ["meters", 50.0],
+    //     "cam-vert": ["meters", 8.0],
+    //     "cam-horz": ["meters", 20.0],
+    //     "path": ["vector3m", // I am pretty sure game will crash if there is no path for an enemy. So just add one. You can use "path-actor" if you want to use another actor's path.
+    //         [1569.69, 202.347, 1300.8],
+    //         [1615.1, 202.347, 1316.44],
+    //         [1606.37, 202.347, 1334.84 ],
+    //         [1566.53, 202.347, 1331.17]
+    //       ],
+    //       "custom-nav": ["symbol", "path"],
+    //        "vis-dist-hack":["meters", 500.0]
+    //     //"nav-mesh-sphere": ["vector4m", // You can define spheres that will be added to the navmesh of the enemy. Enemies of the navmesh will avoid these spheres - like they avoid each other.
+    //     //  [-5.3159, 202.347, 16.3499, 1.0]
+    //      // ]
+    //   }
+    // },
+     {
+      "trans": [1320.99, 180.292, 1364.13],
+      "etype": "racer",
+      "game_task": 0,
+      "quat" : [0.000, 0.000, -0.000, 1.000],
+      "bsphere": [1320.99, 180.292, 1364.13, 10],
+      "lump": {
+        "name": "valley-racer-01"
+        
+        
+      }
+    },
+    //broken
+    // {
+    //   "trans": [1660.14, 272.184 , 1387.25],
+    //   "etype": "pelican",
+    //   "game_task": 0,
+    //   "quat" : [0, 0, 0, 1],
+    //   "bsphere": [1660.14, 272.184 , 1387.25, 10],
+    //   "lump": {
+    //     "name": "test-pelican",
+    //     "vis-dist": ["meters", 200.0],
+    //     "cam-notice-dist": ["meters", 30.0],
+    //     "idle-distance": ["meters", 50.0],
+    //     "cam-vert": ["meters", 8.0],
+    //     "cam-horz": ["meters", 20.0]
+    //   }
+    // }
+    //water//
+    {
+      "aid": 71000,
+      "trans": [ -1178.2, 169.195, 200.65 ],
+      "etype": "jungle-water",
+      "game_task": 0,
+      "quat": [ 0.0, -0.0, -0.0, 0.0 ],
+      "bsphere": [ 1100.0, 0.0, 0.0, 10 ],
+      "lump": {
+        "name": "WaterShape-8",
+        "look": [ "int32", 8 ],
+        "scale": [ "float", 1.7 ],
+        "vol": ["vector-vol",
+       [-1.000, 0.000, -0.000, 1255.459],
+       [0.000, 0.000, -1.000, -156.028],
+       [1.000, 0.000, -0.000, -1116.328],
+       [0.000, 0.000, 1.000, 253.097],
+       [0.000, -1.000, -0.000, -149.159],
+       [0.000, 1.000, -0.000, 169.159]
+      ]
+      ,
+    "water-height": [ "float", 697214.72, 2048, 8192, 1048588.0 ] // camera height (top of water volume plane + 4192), ?, wadledept, flags "water-height": ["water-height", 0.0, 0.5, 2.0, "(water-flags wt08 wt03 wt01)"],
+    }},
+
+    {
+      "trans": [-1279.6, 188.842, 488.81],
+      "etype": "water-anim",
+      "game_task": 0,
+      "quat" : [0.0, 0.0, -0.0, 1.0],
+      "bsphere": [48.77, -0.08, -112.62, 10],
+      "lump": {
+        "name":"WaterShape-13-second",
+        "scale": ["float", 2.0],
+        "look": ["int32", 13]
+      }
+    },
+    {
+      "trans": [1634.57, 206.152 , 1384.86],//1634.57
+      "etype": "water-anim",
+      "game_task": 0,
+      "quat" : [0.0, 0.0, -0.0, 1.0],
+      "bsphere": [48.77, -0.08, -112.62, 200],
+      "lump": {
+        "name":"Water-1-yakow",
+        "look": ["int32", 38],
+        "vis-dist": ["meters", 200.0],
+        "vol": ["vector",
+    [-1.000, 0.000, -0.000, 1311.807],
+    [0.000, 0.000, -1.000, -462.463],
+    [1.000, 0.000, -0.000, -1245.123],
+    [0.000, 0.000, 1.000, 523.468],
+    [0.000, -1.000, -0.000, -168.842],
+    [0.000, 1.000, -0.000, 188.842]
+  ],
+  "water-height": ["float",
+        777688.832, // Dark Eco Water Height use trans x 4096 + 4192 for the height
+        2048, // Wade Height 
+        8192, // Swim Height
+        1572872.0 // Flags - dont know the actual dark eco flag so sticking with floats. 
+        ]
+      }
+    },
+
+      //babak//
+    // pontoons?? 
+    // {
+    //   "trans": [ -1226.01, 169.60, 177.74 ], // translation
+    //   "etype": "pontoonten", // actor type
+    //   "game_task": 0, // associated game task (for powercells, etc)
+    //   "quat": [ 0.000000, -0.388234, -0.000000, 0.921561 ], // quaternion - Along Z axis in Blender
+    //   "bsphere": [ -973.63, 358.12, 228.97, 10 ], // bounding sphere
+    //   "lump": {
+    //     "name": "abandon-pontoon-01",
+    //     "water-actor": [ "uint32", 71000 ]
+    //   }
+    // }
+    //yakow
+           {
+      "aid": 50000,
+      "trans": [1205.76, 231.42, 1200.0],
+      "etype": "yakow",
+      "game_task": 0,
+      "quat": [0, 0, 0, 1],
+      "bsphere": [1205.76, 231.42, 1200.0, 10],
+      "lump": {
+        "name": "yakow1",
+        "vist-dist": ["meters", 200.0],
+        "cam-notice-dist": ["meters", 30.0],
+        "idle-distance": ["meters", 50.0],
+        "cam-vert": ["meters", 8.0],
+        "cam-horz": ["meters", 20.0]
+      }
+    },
+
+
+    {
+      "aid": 50101,
+      "trans": [1601.89, 207.58, 1312.44],
+      "etype": "babak",
+      "game_task": 0,
+      "quat": [0, 0, 0, 1],
+      "bsphere": [1601.89, 207.58, 1312.44, 10],
+      "lump": {
+        "name": "babak",
+        "vist-dist": ["meters", 200.0],
+        "cam-notice-dist": ["meters", 30.0],
+        "idle-distance": ["meters", 50.0],
+        "cam-vert": ["meters", 8.0],
+        "cam-horz": ["meters", 20.0],
+        "path": ["vector3m",
+          [1601.89, 207.58, 1312.44],
+          [1597.89, 207.58, 1310.44],
+          [1597.89, 207.58, 1314.44]],
+        "nav-mesh-sphere": ["vector4m",
+          [1599.89, 207.58, 1312.44, 1.0]]
+      }
+    },
+  // working path however it only does point 1 and 2
+    {
+      "trans": [-1827.74, 312.26, 683.96],
+      "etype": "plat",
+      "game_task": 0,
+      "quat": [0, 0, 0, 1],
+      "bsphere": [-1827.74, 312.26, 683.96, 10],
+      "lump": {
+        "name": "NurbsCurve-0",
+        "path": ["vector4m",
+          [1569, 216, 1310, 1.0],
+          [1559, 216, 1300, 1.0],
+          [1569, 216, 1290, 1.0],
+          [1579, 216, 1300, 1.0]],
+        "path-k": ["float",
+          0.0, -2.0, -1.0, 0.0, 1.0, 
+          2.0, 3.0, 1.0],
+        "sync": ["float", 10.0, 0.0]
+      }
+    },
+     {
+      "trans": [1569, 218, 1310],
+      "etype": "plat",
+      "game_task": 0,
+      "quat": [0, 0, 0, 1],
+      "bsphere": [1569, 218, 1310, 10],
+      "lump": {
+        "name": "NurbsCurve-1",
+        "path": ["vector4m",
+          [1569, 218, 1310, 1.0],
+          [1559, 218, 1300, 1.0],
+          [1569, 218, 1290, 1.0],
+          [1579, 218, 1300, 1.0],
+          [1569, 228, 1310, 1.0],
+          [1559, 228, 1300, 1.0],
+          [1569, 228, 1290, 1.0],
+          [1579, 228, 1300, 1.0]],
+        "path-k": ["float",
+         0, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 5],
+         
+        "sync": ["float", 15.0, 0.0]
+      }
+    },
+    {
+      "trans": [1660.30, 270.00, 1383.00],
+      "etype": "plat",
+      "game_task": 0,
+      "quat": [0, 0, 0, 1],
+      "bsphere": [1660.30, 270.00, 1383.00, 10],
+      "lump": {
+        "name": "rise platform",
+        "path": ["vector4m",
+          [1661.59, 170.00, 1400.00, 1],
+          [1661.59, 190.00, 1400.00, 1],
+          [1661.59, 204.288, 1400.00, 1],
+          [1661.59, 220.00, 1400.00, 1],
+          [1661.59, 240.00, 1400.00, 1],//5
+          [1661.59, 260.00, 1400.00, 1],
+          [1661.59, 280.00, 1400.00, 1],
+          [1661.59, 300.00, 1400.00, 1],
+          [1661.59, 320.00, 1400.00, 1],
+          [1661.59, 340.00, 1400.00, 1],//10
+          [1661.59, 360.00, 1400.00, 1],
+          [1661.59, 380.00, 1400.00, 1],
+          [1661.59, 380.288, 1400.00, 1],
+          [1661.59, 400.00, 1400.00, 1],
+          [1661.59, 420.00, 1400.00, 1],//15
+          [1661.59, 440.00, 1400.00, 1],
+          [1661.59, 460.00, 1400.00, 1],
+          [1661.59, 480.00, 1400.00, 1],
+          [1661.59, 500.00, 1400.00, 1],
+          [1661.59, 520.00, 1400.00, 1],//20
+          [1661.59, 540.00, 1400.00, 1],
+          [1661.59, 560.00, 1400.00, 1]//22
+      
+          
+          ],
+        
+           "path-k": ["float",
+         0, 0, 0, 0,
+        1, 2, 3, 4,5,6,7,8,9,10,11,12,13,14,15,16,17,
+        21,21,21,21],
+         
+        "sync": ["float", 75.0, 0.0]
+        // it take about 30 second for the player to get here
+      }
+    },
+    {
+      "trans": [1660.30, 270.00, 1383.00],
+      "etype": "plat",
+      "game_task": 0,
+      "quat": [0, 0, 0, 1],
+      "bsphere": [1660.30, 270.00, 1383.00, 10],
+      "lump": {
+        "name": "bird back",
+        "path": ["vector4m",
+          [1662.29, 260.01, 1383.00, 1],
+          [1653.63, 276.91, 1376.46, 1],
+          [1646.97, 283.81, 1369.92, 1],
+          [1640.30, 288.84, 1363.38, 1],
+          [1633.64, 293.87, 1356.84, 1],
+          [1626.98, 297.02, 1350.28, 1],
+          [1620.31, 300.18, 1343.72, 1],
+          [1613.64, 301.46, 1337.16, 1],
+          [1606.97, 302.73, 1330.59, 1],
+          [1600.31, 302.11, 1324.07, 1],
+          [1593.64, 301.50, 1317.54, 1],
+          [1586.98, 299.01, 1311.01, 1],
+          [1580.31, 296.52, 1304.47, 1],
+          [1573.64, 292.20, 1297.94, 1],
+          [1566.98, 287.88, 1291.40, 1],
+          [1560.31, 281.66, 1284.86, 1],
+          [1553.64, 275.45, 1278.33, 1],
+          [1546.98, 267.77, 1271.79, 1],
+          [1540.31, 260.08, 1265.26, 1],
+          [1533.64, 249.62, 1258.73, 1],
+          [1526.98, 239.16, 1252.20, 1],
+          [1520.29, 227.08, 1245.60, 1],
+          [1513.60, 215.00, 1239.00, 1]//23
+          
+          ],
+        
+           "path-k": ["float",
+         0, 0, 0, 0, 
+         1, 2, 3, 4, 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,
+         20,20,20,20],
+         
+        "sync": ["float", 30.0, 0.0]
+        // it take about 30 second for the player to get here
+      }
+    },
+    {
+      "trans": [1513.60, 215.00, 1239.00],
+      "etype": "plat",
+      "game_task": 0,
+      "quat": [0, 0, 0, 1],
+      "bsphere": [1513.60, 215.00, 1239.00, 10],
+      "lump": {
+        "name": "plat power cell path",
+        "path": ["vector4m",
+          [1513.60, 215.00, 1239.00, 1],
+          [1484.21, 215.00, 1239.00, 1],
+          [1384.21, 215.00, 1239.00, 1],
+          [1284.21, 215.00, 1239.00, 1]
+          ],
+        
+           "path-k": ["float",
+         0, 0, 0, 0, 
+         1, 2, 3, 1],
+         
+        "sync": ["float", 30.0, 0.0]
+        // it take about 30 second for the player to get here
+      }
+    },
+
+    //scount files
+
+     {
+      "trans": [1294.2, 192.362, 1333.48], // translation
+      "etype": "crate", // actor type
+      "game_task": 124, // associated game task (for powercells, etc)
+      "quat": [0, -0.087, -0, 0.996], // quaternion
+      "bsphere": [1294.2, 192.362, 1333.48, 10], // bounding sphere
+      "lump": {
+        "name": "crystalc-crate-buzzer-01",
+        "crate-type": "'iron",
+        "eco-info": ["int32", 8, 393337], // to get SF task = game-task + (2^16 * buzzer-count)
+        "movie-pos": ["meters", 1294.2, 192.362, 1333.48]
+      }
+    },
+     {
+      "trans": [1212.66, 205.586, 1195.55], // translation
+      "etype": "crate", // actor type
+      "game_task": 124, // associated game task (for powercells, etc)
+      "quat": [0, -0.087, -0, 0.996], // quaternion
+      "bsphere": [1212.66, 205.586, 1195.55, 10], // bounding sphere
+      "lump": {
+        "name": "crystalc-crate-buzzer-02",
+        "crate-type": "'iron",
+        "eco-info": ["int32", 8, 393337], // to get SF task = game-task + (2^16 * buzzer-count)
+        "movie-pos": ["meters", 1212.66, 205.586, 1195.55]
+      }
+    },
+     {
+      "trans": [1245.22, 189.374, 1072.8], // translation
+      "etype": "crate", // actor type
+      "game_task": 124, // associated game task (for powercells, etc)
+      "quat": [0, -0.087, -0, 0.996], // quaternion
+      "bsphere": [1245.22, 189.374, 1072.8, 10], // bounding sphere
+      "lump": {
+        "name": "crystalc-crate-buzzer-03",
+        "crate-type": "'iron",
+        "eco-info": ["int32", 8, 393337], // to get SF task = game-task + (2^16 * buzzer-count)
+        "movie-pos": ["meters", 1245.22, 189.374, 1072.8]
+      }
+    },
+     {
+      "trans": [1365.74, 222.132, 952.623], // translation
+      "etype": "crate", // actor type
+      "game_task": 124, // associated game task (for powercells, etc)
+      "quat": [0, -0.087, -0, 0.996], // quaternion
+      "bsphere": [1365.74, 222.132, 952.623, 10], // bounding sphere
+      "lump": {
+        "name": "crystalc-crate-buzzer-04",
+        "crate-type": "'iron",
+        "eco-info": ["int32", 8, 393337], // to get SF task = game-task + (2^16 * buzzer-count)
+        "movie-pos": ["meters", 1365.74, 222.132, 952.623]
+      }
+    },
+     {
+      "trans": [1455.37, 217.549, 1163.49], // translation
+      "etype": "crate", // actor type
+      "game_task": 124, // associated game task (for powercells, etc)
+      "quat": [0, -0.087, -0, 0.996], // quaternion
+      "bsphere": [1455.37, 217.549, 1163.49, 10], // bounding sphere
+      "lump": {
+        "name": "crystalc-crate-buzzer-05",
+        "crate-type": "'iron",
+        "eco-info": ["int32", 8, 393337], // to get SF task = game-task + (2^16 * buzzer-count)
+        "movie-pos": ["meters", 1455.37, 217.549, 1163.49]
+      }
+    },
+     {
+      "trans": [1592.07, 203.853, 1397.47], // translation
+      "etype": "crate", // actor type
+      "game_task": 124, // associated game task (for powercells, etc)
+      "quat": [0, -0.087, -0, 0.996], // quaternion
+      "bsphere": [1592.07, 203.853, 1397.47, 10], // bounding sphere
+      "lump": {
+        "name": "crystalc-crate-buzzer-06",
+        "crate-type": "'iron",
+        "eco-info": ["int32", 8, 393337], // to get SF task = game-task + (2^16 * buzzer-count)
+        "movie-pos": ["meters", 1592.07, 203.853, 1397.47]
+      }
+    },
+     {
+      "trans": [1633.59, 206.205, 1252.32], // translation
+      "etype": "crate", // actor type
+      "game_task": 124, // associated game task (for powercells, etc)
+      "quat": [0, -0.087, -0, 0.996], // quaternion
+      "bsphere": [1633.59, 206.205, 1252.32, 10], // bounding sphere
+      "lump": {
+        "name": "crystalc-crate-buzzer-07",
+        "crate-type": "'iron",
+        "eco-info": ["int32", 8, 393337], // to get SF task = game-task + (2^16 * buzzer-count)
+        "movie-pos": ["meters", 1633.59, 206.205, 1252.32]
+      }
+    },
+
+    //orbs
+    {
+      "trans": [-182.58, 89.83, -42.33], // translation
+      "etype": "money", // actor type
+      "game_task": 0, // associated game task (for powercells, etc)
+      "quat": [0, 0, 0, 1], // quaternion
+      "bsphere": [-182.58, 89.83, -42.33, 10], // bounding sphere
+      "lump": {
+        "name": "Clifful-v-money-01",
+        "light-index": ["int32", 1]
+      }
+    }
+
+    
+  ]
+
+  
+}
