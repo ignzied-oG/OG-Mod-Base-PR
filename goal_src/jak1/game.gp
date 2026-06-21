@@ -1654,9 +1654,7 @@
 ;; Set up the build system to build the level geometry
 ;; this path is relative to the custom_assets/jak1/levels/ folder
 ;; it should point to the .jsonc file that specifies the level.
-(build-custom-level "test-level")
-;; the DGO file
-(custom-level-cgo "TLL.DGO" "test-level/testlevel.gd")
+
 
 (build-custom-level "clifful-v")
 ;; the DGO file
